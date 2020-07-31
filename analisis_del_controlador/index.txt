@@ -1,0 +1,37 @@
+public function index(){
+
+	$db=new clasedb();# define un objeto de class de clase db
+	
+	$conex=$db->conectar();# realiza la conexión a la base de datos y la almacena en una variable
+
+	$sql="SELECT * FROM datos_personales";# almacena la consulta para traer todos los datos personales en una variable
+
+	$res=mysqli_query($conex,$sql); # ejecuta la consulta mysql almacena el resultado en una variable
+	
+	$campos=mysqli_num_fields($res); # guardamos el numero de campos de resultado de la variable res
+	
+	$filas=mysqli_num_rows($res); # obtenemos el numero de filas de resultado de la variable res 
+ 	
+	$i=0; # se crea una variable contador
+	
+	$datos[]=array(); *creamos una variable array llamada datos
+	
+	# ejecutamos un ciclo para almacenar con el fetch_array los resultados de la variable res en la variable data 
+	
+	while($data=mysqli_fetch_array($res)) {
+		
+		# se crea un ciclo for con la variable j para almacenar los resultados de data en el arreglo datos
+
+		for ($j=0; $j <$campos ; $j++) {
+		
+			$datos[$i][&j]=$data[$j];
+		}
+		
+		$i++; #aumentamos el contador
+	}
+	
+	mysqli_close($conex); # cerramos la conexión con la base de datos 
+
+		header("Location: index.php?filas=".&filas."&campos=".$campos."&dato".serialize($datos)); # redericcionamos al index e enviamos la variable filas,la variable camos y la variable campos con el metodo gets
+
+}//fin de la funcion index
